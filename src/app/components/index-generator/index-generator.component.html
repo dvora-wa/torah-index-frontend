@@ -1,0 +1,101 @@
+<div class="container" dir="rtl">
+  <div class="header">
+    <h1>הפקת מפתחות לספרים תורניים</h1>
+    <p class="subtitle">יצרו מפתחות אוטומטיים לספרכם באמצעות בינה מלאכותית</p>
+  </div>
+
+  <div class="content">
+    <!-- Step 1: Index Type Selection -->
+    <section class="step" *ngIf="!generatedIndex()">
+      <h2>שלב א: בחירת סוג המפתח</h2>
+      <div class="index-type-buttons">
+        <!-- for() -->
+        <button *ngFor="let type of indexTypes" [class.selected]="selectedIndexType() === type.value"
+          (click)="onIndexTypeChange(type.value)" class="index-type-btn">
+          {{ type.label }}
+        </button>
+      </div>
+    </section>
+
+    <!-- Step 2: File Upload -->
+    <section class="step" *ngIf="!generatedIndex()">
+      <h2>שלב ב: העלאת הקובץ</h2>
+      <div class="file-upload">
+        <label for="file-input" class="file-label">
+          <span *ngIf="!selectedFile()" class="upload-icon">📄</span>
+          <span *ngIf="!selectedFile()" class="upload-text">
+            בחרו קובץ PDF או גררו אותו לכאן
+          </span>
+          <span *ngIf="selectedFile()" class="selected-file">
+            ✓ {{ selectedFile()!.name }}
+          </span>
+        </label>
+        <input #fileInput type="file" id="file-input" accept=".pdf" (change)="onFileSelected($event)" hidden />
+      </div>
+    </section>
+
+    <!-- Generate Button -->
+    <section class="step" *ngIf="!generatedIndex()">
+      <button [disabled]="!isReady() || isLoading()" (click)="generateIndex()" class="generate-btn">
+        <span *ngIf="!isLoading()">הפק מפתח</span>
+        <span *ngIf="isLoading()">מעבד...</span>
+      </button>
+    </section>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage()" class="error-message">
+      ⚠️ {{ errorMessage() }}
+    </div>
+
+    <!-- Results -->
+    <section *ngIf="generatedIndex()" class="results-section">
+      <div class="results-header">
+        <h2>תוצאות - מפתח {{ selectedIndexType() }}</h2>
+        <button (click)="reset()" class="reset-btn">חזור לתחילה</button>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview">
+        <h3>תצוגה מקדימה ({{ generatedIndex()!.previewEntries.length }} פריטים ראשונים מתוך {{
+          generatedIndex()!.data.entries.length }})</h3>
+        <ul class="entry-list">
+          <li *ngFor="let entry of generatedIndex()!.previewEntries" class="entry-item">
+            <span class="term">{{ entry.term }}</span>
+            <span *ngIf="entry.pageNumbers.length > 0" class="pages">
+              (עמוד: {{ entry.pageNumbers.join(', ') }})
+            </span>
+            <p *ngIf="entry.description" class="description">
+              {{ entry.description }}
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button (click)="downloadAsWord()" class="download-btn">
+          ⬇️ הורד קובץ Word
+        </button>
+        <button (click)="copyToClipboard()" class="copy-btn">
+          📋 העתק לתיקייה
+        </button>
+      </div>
+
+      <!-- Full List -->
+      <details class="full-list">
+        <summary>הצג את המפתח המלא ({{ generatedIndex()!.data.entries.length }} פריטים)</summary>
+        <ul class="entry-list">
+          <li *ngFor="let entry of generatedIndex()!.data.entries" class="entry-item">
+            <span class="term">{{ entry.term }}</span>
+            <span *ngIf="entry.pageNumbers.length > 0" class="pages">
+              (עמוד: {{ entry.pageNumbers.join(', ') }})
+            </span>
+            <p *ngIf="entry.description" class="description">
+              {{ entry.description }}
+            </p>
+          </li>
+        </ul>
+      </details>
+    </section>
+  </div>
+</div>
