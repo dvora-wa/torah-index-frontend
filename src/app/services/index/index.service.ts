@@ -18,10 +18,10 @@ export class IndexService {
     formData.append('file', file);
     formData.append('indexType', type.toString());
 
-    return this.http.post<IndexResponse>(`${this.apiUrl}/index/generate`, formData);
+    return this.http.post<IndexResponse>(`${this.apiUrl}/api/index/generate`, formData);
   }
 
   exportToWord(entries: IndexEntry[], type: IndexType): Observable<Blob> {
-    return this.http.post(`${this.apiUrl}/index/export-word`, { entries, type }, { responseType: 'blob' });
+    return this.http.post(`${this.apiUrl}/api/index/export-word`, { entries, type }, { responseType: 'blob' });
   }
 }
