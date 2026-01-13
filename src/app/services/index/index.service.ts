@@ -11,12 +11,19 @@ export class IndexService {
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
-  
 
-  generateIndex(file: File, type: IndexType): Observable<IndexResponse> {
+
+  generateIndex(
+    file: File,
+    type: IndexType,
+    fromPage?: number | null,
+    toPage?: number | null
+  ): Observable<IndexResponse> {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('indexType', type.toString());
+    if (fromPage != null) formData.append('fromPage', fromPage.toString());
+    if (toPage != null) formData.append('toPage', toPage.toString());
 
     return this.http.post<IndexResponse>(`${this.apiUrl}/api/index/generate`, formData);
   }

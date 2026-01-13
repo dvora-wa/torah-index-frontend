@@ -71,7 +71,12 @@ export class IndexGeneratorComponent {
     this.isLoading.set(true);
     this.errorMessage.set('');
 
-    this.indexService.generateIndex(file, indexType).subscribe({
+    this.indexService.generateIndex(
+      file,
+      indexType,
+      this.fromPage(),
+      this.toPage()
+    ).subscribe({
       next: (response: IndexResponse) => {
         this.generatedIndex.set(response);
         this.isLoading.set(false);
