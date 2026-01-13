@@ -34,6 +34,22 @@
       </div>
     </section>
 
+    <section class="step" *ngIf="!generatedIndex()">
+      <h2>טווח עמודים (אופציונלי)</h2>
+
+      <div class="page-range">
+        <div class="page-input">
+          <label>מעמוד</label>
+          <input type="number" min="1" [ngModel]="fromPage()" (ngModelChange)="fromPage.set($event)" />
+        </div>
+
+        <div class="page-input">
+          <label>עד עמוד</label>
+          <input type="number" min="1" [ngModel]="toPage()" (ngModelChange)="toPage.set($event)" />
+        </div>
+      </div>
+    </section>
+
     <!-- Generate Button -->
     <section class="step" *ngIf="!generatedIndex()">
       <button [disabled]="!isReady() || isLoading()" (click)="generateIndex()" class="generate-btn">

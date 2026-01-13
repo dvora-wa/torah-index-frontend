@@ -13,6 +13,8 @@ import { IndexService } from '../../services/index/index.service';
 export class IndexGeneratorComponent {
   selectedIndexType = signal<IndexType | null>(null);
   selectedFile = signal<File | null>(null);
+  fromPage = signal<number | null>(null);
+  toPage = signal<number | null>(null);
   isLoading = signal(false);
   generatedIndex = signal<IndexResponse | null>(null);
   errorMessage = signal<string>('');
@@ -26,7 +28,7 @@ export class IndexGeneratorComponent {
     { value: IndexType.PERSONS, label: 'מפתח אישים' },
   ];
 
-  constructor(private indexService: IndexService) {}
+  constructor(private indexService: IndexService) { }
 
   onIndexTypeChange(type: IndexType): void {
     this.selectedIndexType.set(type);
@@ -54,6 +56,14 @@ export class IndexGeneratorComponent {
 
   generateIndex(): void {
     if (!this.isReady()) return;
+
+    const from = this.fromPage();
+    const to = this.toPage();
+
+    if (from !== null && to !== null && from > to) {
+      this.errorMessage.set('עמוד התחלה לא יכול להיות גדול מעמוד סיום');
+      return;
+    }
 
     const indexType = this.selectedIndexType()!;
     const file = this.selectedFile()!;
