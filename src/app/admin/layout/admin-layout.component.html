@@ -1,0 +1,27 @@
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h5 class="sidebar-title">Admin Panel</h5>
+
+    <a routerLink="/admin/form" class="sidebar-link">
+      ⚙️ הגדרות Prompt
+    </a>
+
+    <a routerLink="/admin/chunks" class="sidebar-link">
+      📦 Chunking
+    </a>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="topbar">
+      <span>מערכת ניהול</span>
+    </header>
+
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+</div>
