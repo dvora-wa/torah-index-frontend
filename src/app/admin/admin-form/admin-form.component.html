@@ -5,8 +5,8 @@
 
   <div class="card-body">
     <form [formGroup]="form" class="d-flex flex-column gap-4">
-      <prompt-editor [formGroup]="promptForm"></prompt-editor>
-      <chunk-settings [formGroup]="chunksForm"></chunk-settings>
+      <prompt-editor *ngIf="promptForm" [formGroup]="promptForm"></prompt-editor>
+      <chunk-settings *ngIf="chunksForm" [formGroup]="chunksForm"></chunk-settings>
     </form>
   </div>
 

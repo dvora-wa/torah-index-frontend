@@ -36,6 +36,7 @@ export class AdminFormComponent {
 
   ngOnInit() {
     this.promptConfigService.get().subscribe(config => {
+      console.log('CONFIG FROM SERVER', config);
       this.form.patchValue({
         prompt: {
           basePrompt: config.basePrompt,
