@@ -1,23 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PromptConfig } from '../../models/prompt-config.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PromptConfigService {
-  private baseUrl = '/api/admin/prompts';
+  private baseUrl = `${environment.apiUrl}/api/admin/prompts`;
 
   constructor(private http: HttpClient) {}
 
-  get() {
-    return this.http.get<{ systemPrompt: string; userPrompt: string }>(
-      this.baseUrl
-    );
+  get(): Observable<any> {
+    return this.http.get(this.baseUrl);
   }
 
-  update(data: any) {
-    return this.http.put(this.baseUrl, data);
+  update(data: any): Observable<void> {
+    return this.http.put<void>(this.baseUrl, data);
   }
 }

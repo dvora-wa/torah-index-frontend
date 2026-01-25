@@ -12,7 +12,6 @@ export class IndexService {
 
   constructor(private http: HttpClient) { }
 
-
   generateIndex(
     file: File,
     type: IndexType,
