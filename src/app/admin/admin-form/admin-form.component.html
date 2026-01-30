@@ -4,15 +4,17 @@
   </div>
 
   <div class="card-body">
-    <form [formGroup]="form" class="d-flex flex-column gap-4">
+    <form [formGroup]="form" (ngSubmit)="save()" class="d-flex flex-column gap-4">
       <prompt-editor *ngIf="promptForm" [formGroup]="promptForm"></prompt-editor>
       <chunk-settings *ngIf="chunksForm" [formGroup]="chunksForm"></chunk-settings>
+
+      <div class="card-footer bg-white text-center">
+        <button type="submit" class="btn btn-primary px-4" [disabled]="form.pristine || form.invalid">
+          שמירה
+        </button>
+      </div>
     </form>
   </div>
 
-  <div class="card-footer bg-white text-center">
-    <button class="btn btn-primary px-4">
-      שמירה
-    </button>
-  </div>
+
 </div>
