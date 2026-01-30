@@ -61,6 +61,7 @@ export class AdminFormComponent {
   }
 
   save() {
+    console.log("save");
     if (this.form.invalid) return;
 
     const value = this.form.value;
@@ -69,7 +70,7 @@ export class AdminFormComponent {
       ...value.prompt,
       ...value.chunks
     };
-
+    console.log(payload)
     this.promptConfigService.update(payload).subscribe({
       next: () => {
         this.snackbar.open('שינויים נשמרו בהצלחה!', 'סגור', {
