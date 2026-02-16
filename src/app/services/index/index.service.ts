@@ -28,6 +28,6 @@ export class IndexService {
   }
 
   exportToWord(entries: IndexEntry[], type: IndexType): Observable<Blob> {
-    return this.http.post(`${this.apiUrl}/api/index/export-word`, { entries, type }, { responseType: 'blob' });
+    return this.http.post(`${this.apiUrl}/api/index/export-word`, { entries, indexType: type }, { responseType: 'blob' });
   }
 }
